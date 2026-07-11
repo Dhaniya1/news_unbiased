@@ -16,16 +16,15 @@ def search(query: str, db: Session = Depends(get_db)):
 
     feed = feedparser.parse(rss_url)
 
-    articles = []
-
-    for articles in feed.entries:
+    for article in feed.entries:
         db_article = Articles(
-            title=articles.title,
-            link=articles.link,
-            published=articles.published,
-            content=articles.summary,
+            title=article.title,
+            link=article.link,
+            published=article.published,
+            content=article.summary,
         )
         db.add(db_article)
-        db.commit()
 
-    return articles
+    db.commit()
+
+    return {"articles_saved": len(feed.entries)}

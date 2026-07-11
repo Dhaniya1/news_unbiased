@@ -7,6 +7,6 @@ class Articles(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
-    link = Column(String)
+    link = Column(String, unique=True)
     published = Column(String)
     content = Column(String)
